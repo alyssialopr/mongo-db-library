@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const LivreSchema = new mongoose.Schema({
+const BookSchema = new mongoose.Schema({
     author: {
         type: String,
         required: true,
@@ -61,12 +61,12 @@ const LivreSchema = new mongoose.Schema({
     }
 })
 
-LivreSchema.index(
+BookSchema.index(
   { name: "text", bio: "text" },
   { weights: { name: 5, bio: 1 } }
 );
 
 
-const Livre = mongoose.model("Livre", LivreSchema);
+const Book = mongoose.model("Book", BookSchema);
 
-export default Livre;
+export default Book;
