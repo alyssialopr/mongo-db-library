@@ -1,0 +1,26 @@
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bibliothèque</title>
+  </head>
+  <body>
+    <h1>Liste des livres</h1>
+    <ul id="livreList"></ul>
+
+    <script>
+      fetch("/api/books")
+        .then((res) => res.json())
+        .then((data) => {
+          const ul = document.getElementById("livreList");
+          data.forEach((book) => {
+            const li = document.createElement("li");
+            li.textContent = `${book.name} – ${book.author} (${book.price}€)`;
+            ul.appendChild(li);
+          });
+        })
+        .catch((err) => {
+          console.error("Erreur :", err);
+        });
+    </script>
+  </body>
+</html>

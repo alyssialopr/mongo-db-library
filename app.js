@@ -7,6 +7,11 @@ import connectDB from './config/db.js';
 import indexRouter from './routes/index.js';
 import pokemonRouter from './routes/pokemons.js';
 import trainerRouter from './routes/trainer.js'
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 connectDB();
@@ -15,6 +20,8 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Routes
 app.use('/', indexRouter);
