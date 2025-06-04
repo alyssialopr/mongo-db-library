@@ -8,7 +8,7 @@ const CustomerSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 200,
   },
-  name: {
+  firstname: {
     type: String,
     required: true,
     trim: true,
