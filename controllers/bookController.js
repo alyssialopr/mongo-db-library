@@ -11,20 +11,16 @@ export const createBook = async (req, res) => {
   }
 };
 
-export const getBook = async (req, res) => {
+export const getBooks = async (req, res) => {
   // const { search, populate, limit: queryLimit, page: queryPage } = req.query;
   // const limit = parseInt(queryLimit) || 10;
   // const page = parseInt(queryPage) || 1;
   // const skip = (page - 1) * limit;
  try {
    // Filtre basé sur la recherche textuelle
-   const filter = search ? { $text: { $search: search } } : {};
 
    // Récupération des livres avec tri par pertinence si recherche
-   const books = await Book.find(
-     filter,
-     search ? { score: { $meta: "textScore" } } : {} // Ajout du score de recherche si applicable
-   ).sort(search ? { score: { $meta: "textScore" } } : {}); // Tri par pertinence si recherche
+   const books = await Book.find()
 
    // Réponse avec les données
    res.json({ data: books });

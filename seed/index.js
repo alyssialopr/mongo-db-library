@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import seedBooks from "./book.js";
 import seedCustomers from "./customer.js";
 import seedLibraries from "./library.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const seed = async () => {
   console.log(process.env.MONGODB_URI);
