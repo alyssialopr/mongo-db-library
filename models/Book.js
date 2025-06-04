@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
 const LivreSchema = new mongoose.Schema({
-    auteur: {
+    author: {
         type: String,
         required: true,
         trim: true,
         minlength: 2,
         maxlength: 100
     },
-    prix: {
+    price: {
         type: Number,
         required: true,
         trim: true,
@@ -26,7 +26,7 @@ const LivreSchema = new mongoose.Schema({
         minlength: 10,
         maxlength: 13
     },
-    nom : {
+    name : {
         type: String,
         required: true,
         trim: true,

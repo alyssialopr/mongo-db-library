@@ -8,39 +8,39 @@ const ClientSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 200,
   },
-  nom: {
+  name: {
     type: String,
     required: true,
     trim: true,
     minlength: 2,
     maxlength: 100,
   },
-  prenom: {
+  lastname: {
     type: String,
     required: true,
     trim: true,
     minlength: 2,
     maxlength: 100,
   },
-  dateNaissance: {
+  birthdate: {
     type: Date,
     required: true,
   },
-  pays : {
+  country : {
     type: String,
     required: false,
     trim: true,
     minlength: 2,
     maxlength: 100,
   },
-  langue: {
+  language: {
     type: String,
     required: false,
     trim: true,
     minlength: 2,
     maxlength: 100,
   },
-  livresEmpruntes: [
+  loanBook: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Livre",

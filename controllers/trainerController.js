@@ -1,9 +1,10 @@
-import Trainer from "../models/Trainer.js";
-import Pokemon from "../models/Pokemon.js";
+import Client from "../models/Client.js";
+import Livre from "../models/Livre.js";
+import Bibliotheque from "../models/Bibliotheque.js";
 
 const allowedPopulates = ["team"];
 
-export const createTrainer = async (req, res) => {
+export const createLivre = async (req, res) => {
   try {
     const newTrainer = new Trainer(req.body);
     await newTrainer.save();

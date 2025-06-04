@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const BibliothequeSchema = new mongoose.Schema({
-  livre : {
+  books : {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Livre",
     required: true,
   },
-  nom : {
+  name : {
     type: String,
     required: true,
     trim: true,
