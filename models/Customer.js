@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ClientSchema = new mongoose.Schema({
+const CustomerSchema = new mongoose.Schema({
   mail: {
     type: String,
     required: true,
@@ -26,7 +26,7 @@ const ClientSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  country : {
+  country: {
     type: String,
     required: false,
     trim: true,
@@ -48,11 +48,11 @@ const ClientSchema = new mongoose.Schema({
   ],
 });
 
-ClientSchema.index(
+CustomerSchema.index(
   { name: "text", bio: "text" },
   { weights: { name: 5, bio: 1 } }
 );
 
-const Client = mongoose.model("Client", LivreSchema);
+const Customer = mongoose.model("Customer", CustomerSchema);
 
-export default Client;
+export default Customer;

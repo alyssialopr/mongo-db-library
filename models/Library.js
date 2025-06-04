@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const BibliothequeSchema = new mongoose.Schema({
+const LibrarySchema = new mongoose.Schema({
   books : {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Livre",
@@ -15,11 +15,11 @@ const BibliothequeSchema = new mongoose.Schema({
   },
 });
 
-BibliothequeSchema.index(
+LibrarySchema.index(
   { name: "text", bio: "text" },
   { weights: { name: 5, bio: 1 } }
 );
 
-const Bibliotheque = mongoose.model("Bibliotheque", BibliothequeSchema);
+const Library = mongoose.model("Library", LibrarySchema);
 
-export default Bibliotheque;
+export default Library;
