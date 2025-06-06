@@ -45,7 +45,7 @@ export const getBookById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 export const deleteBooks = async (req, res) => {
   try {
@@ -58,14 +58,16 @@ export const deleteBooks = async (req, res) => {
 };
 
 export const searchBooks = async (req, res) => {
-  const { query } = req.query; 
+  const { query } = req.query;
 
   try {
     const books = await Book.find({
       $or: [
         { title: { $regex: query, $options: "i" } },
-        { author: { $regex: query, $options: "i" } }
-      ]
+        { author: { $regex: query, $options: "i" } },
+        { resume: { $regex: query, $options: "i" } },
+        { genre: { $regex: query, $options: "i" } },
+      ],
     });
     res.json(books);
   } catch (error) {
@@ -95,4 +97,4 @@ export const statisticsBooks = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
