@@ -3,7 +3,8 @@ import {
   createBook,
   getBooks,
   deleteBooks,
-  statisticsBooks
+  statisticsBooks,
+  getBookById
 } from "../controllers/bookController.js";
 
 const router = express.Router();
@@ -16,6 +17,9 @@ router.get("/", getBooks);
 
 // Route pour supprimer un livre par ID
 router.delete("/:id", deleteBooks);
+
+// Route pour récupérer un livre par ID
+router.get("/:id", getBookById);
 
 // Route pour récupérer les statistiques des livres
 router.get("/statistics", statisticsBooks); 
