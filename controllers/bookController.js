@@ -30,7 +30,14 @@ export const getBooks = async (req, res) => {
     }, {});
 
     const books = await Book.find(query);
-    res.json({ data: books });
+
+    const booksWithMethodes = books.map((book) => ({
+      ...book.toObject(),
+      isExpensive: book.isExpensive(),
+      
+    }));
+
+    res.json({ data: booksWithMethodes });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -78,10 +85,10 @@ export const searchBooks = async (req, res) => {
   const { query } = req.query;
 
   try {
-    const books = await Book.find(
-      { $text: { $search: query } },
-      { score: { $meta: "textScore" } }
-    ).sort({ score: { $meta: "textScore" } });
+    const books = await Book.find({ $text: { $search: query } })
+      .sort({ score: { $meta: "textScore" } })
+      .select({ score: { $meta: "textScore" } });
+
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
