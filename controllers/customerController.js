@@ -2,12 +2,12 @@ import Customer from "../models/Customer.js";
 
 // Créer un nouveau client
 export const createCustomer = async (req, res) => {
-  const { mail, name, lastname, birthdate, country, language, loanBook } = req.body;
+  const { mail, firstname, lastname, birthdate, country, language, loanBook } = req.body;
 
   try {
     const newCustomer = new Customer({
       mail,
-      name,
+      firstname,
       lastname,
       birthdate,
       country,

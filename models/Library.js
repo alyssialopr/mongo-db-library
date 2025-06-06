@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 
 const LibrarySchema = new mongoose.Schema({
-  books : {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Livre",
-    required: true,
-  },
-  name : {
+  books: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Book", // Correction : référence au modèle "Book"
+      required: true,
+    },
+  ],
+  name: {
     type: String,
     required: true,
     trim: true,
