@@ -24,9 +24,9 @@ export const getBooks = async (req, res) => {
 
 export const deleteBooks = async (req, res) => {
   try {
-    const deleted = await Trainer.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ message: "Trainer not found" });
-    res.json({ message: "Trainer deleted successfully" });
+    const deleted = await Book.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Book not found" });
+    res.json({ message: "Book deleted successfully" });
   } catch (error) {
     res.status(400).json({message: error.message});
   }
