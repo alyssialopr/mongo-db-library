@@ -34,10 +34,6 @@ LibrarySchema.index(
 );
 
 LibrarySchema.index(
-  { name: 1, "books.book": 1 }
-);
-
-LibrarySchema.index(
   { "books.stock": 1 },
   { partialFilterExpression: { "books.stock": { $gt: 0 } } }
 );
