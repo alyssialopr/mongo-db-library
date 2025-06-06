@@ -49,8 +49,17 @@ const CustomerSchema = new mongoose.Schema({
 });
 
 CustomerSchema.index(
-  { name: "text", bio: "text" },
-  { weights: { name: 5, bio: 1 } }
+  { lastname: "text", firstname: "text", mail: "text" },
+  { weights: { lastname: 5, firstname: 3, mail: 1 } }
+);
+
+CustomerSchema.index(
+  { mail: 1 }, 
+  { unique: true }
+);
+
+CustomerSchema.index(
+  { country: 1 }
 );
 
 const Customer = mongoose.model("Customer", CustomerSchema);

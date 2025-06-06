@@ -25,8 +25,21 @@ const LibrarySchema = new mongoose.Schema({
 });
 
 LibrarySchema.index(
-  { name: "text", bio: "text" },
-  { weights: { name: 5, bio: 1 } }
+  { name: 1 },
+  { unique: true }
+);
+
+LibrarySchema.index(
+  { "books.book": 1 }
+);
+
+LibrarySchema.index(
+  { name: 1, "books.book": 1 }
+);
+
+LibrarySchema.index(
+  { "books.stock": 1 },
+  { partialFilterExpression: { "books.stock": { $gt: 0 } } }
 );
 
 const Library = mongoose.model("Library", LibrarySchema);

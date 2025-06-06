@@ -56,10 +56,30 @@ const BookSchema = new mongoose.Schema({
 })
 
 BookSchema.index(
-  { name: "text", bio: "text" },
-  { weights: { name: 5, bio: 1 } }
+    { name: 1, author: 1 }
 );
 
+BookSchema.index(
+    { date: 1 }
+);
+
+BookSchema.index(
+    { price: 1 }
+);
+
+BookSchema.index(
+    { isbn: 1 },
+    { unique: true }
+);
+
+BookSchema.index(
+    { genre: 1 }
+);
+
+BookSchema.index(
+  { name: "text", author: "text", resume: "text" },
+  { weights: { name: 10, author: 5, resume: 1 } }
+);
 
 const Book = mongoose.model("Book", BookSchema);
 
