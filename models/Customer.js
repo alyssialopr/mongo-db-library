@@ -48,6 +48,23 @@ const CustomerSchema = new mongoose.Schema({
   ],
 });
 
+CustomerSchema.methods.plus10LoanBooks = function () {
+  return this.loanBook.length >= 10;
+}
+
+CustomerSchema.methods.age = function () {
+  const today = new Date();
+  const birthDate = new Date(this.birthdate);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  
+  return age;
+}
+
+CustomerSchema.methods.isAdult = function () {
+  const age = this.age();
+  return age >= 18;
+}
+
 CustomerSchema.index(
   { name: "text", bio: "text" },
   { weights: { name: 5, bio: 1 } }

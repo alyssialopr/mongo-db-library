@@ -11,7 +11,7 @@ const customers = async () => {
       mail: "azeazeae@gmail.com",
       firstname: "Ash Ketchum",
       lastname: "Ketchum",
-      birthdate: new Date("1990-05-22"),
+      birthdate: new Date("2020-05-22"),
       country: "Kanto",
       language: "English",
       loanBook: [book1?._id, book2?._id],
