@@ -133,7 +133,7 @@ const books = [
   },
   {
     author: "Tracey Sketchit",
-    price: 130,
+    price: 10,
     date: new Date("2024-02-01"),
     isbn: "1314151617181",
     name: "Tracey Sketchit",

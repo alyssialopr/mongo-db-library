@@ -26,7 +26,15 @@ export const getCustomers = async (req, res) => {
 
   try {
     const customers = await Customer.find();
-    res.json({ data: customers });
+
+    const customersWithMethods = customers.map((customer) => ({
+      ...customer.toObject(),
+      plus10LoanBooks: customer.plus10LoanBooks(),
+      age: customer.age(),
+      isAdult: customer.isAdult(),
+    }));
+
+    res.json({ data: customersWithMethods });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
