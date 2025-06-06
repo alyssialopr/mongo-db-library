@@ -17,6 +17,22 @@ export const createLibrary = async (req, res) => {
   }
 };
 
+export const updateLibrary = async (req, res) => {
+  const { id } = req.params;
+  const { books, name } = req.body;
+  try {
+    const updatedLibrary = await Library.findByIdAndUpdate(
+      id,
+      { books, name },
+      { new: true, runValidators: true }
+    );
+    if (!updatedLibrary) return res.status(404).json({ message: "Library not found" });
+    res.json(updatedLibrary);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 export const getLibraries = async (req, res) => {
   const { search } = req.query;
   try {
