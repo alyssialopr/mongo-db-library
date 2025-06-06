@@ -47,12 +47,6 @@ const BookSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 100
     },
-    stock : {
-        type: Number,
-        required: true,
-        default: 0,
-        min: 0
-    },
     resume : {
         type: String,
         required: false,

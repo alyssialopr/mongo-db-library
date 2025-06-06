@@ -9,7 +9,6 @@ const books = [
     name: "Ash Ketchum",
     genre: "Adventure",
     edition: "First Edition",
-    stock: 10,
     resume: "A young Pokémon trainer from Pallet Town.",
   },
   {
@@ -20,7 +19,6 @@ const books = [
     name: "Misty Waterflower",
     genre: "Adventure",
     edition: "First Edition",
-    stock: 5,
     resume: "A Water-type Pokémon trainer and Gym Leader from Cerulean City.",
   },
   {
@@ -31,7 +29,6 @@ const books = [
     name: "Brock Harrison",
     genre: "Adventure",
     edition: "First Edition",
-    stock: 8,
     resume: "A Rock-type Pokémon trainer and Gym Leader from Pewter City.",
   },
 ];

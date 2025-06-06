@@ -2,12 +2,13 @@ import Library from "../models/Library.js";
 
 // Créer une nouvelle bibliothèque
 export const createLibrary = async (req, res) => {
-  const { books, name } = req.body;
+  const { books, name, stock } = req.body;
 
   try {
     const newLibrary = new Library({
       books,
       name,
+      stock: Array.isArray(books) ? Array(books.length).fill(0) : [], // Initialiser le stock à 0 pour chaque livre
     });
 
     await newLibrary.save();
@@ -20,13 +21,27 @@ export const createLibrary = async (req, res) => {
 // Récupérer toutes les bibliothèques
 export const getLibraries = async (req, res) => {
   const { search } = req.query;
-
   try {
     // Filtre basé sur la recherche textuelle
     const filter = search ? { $text: { $search: search } } : {};
 
-    const libraries = await Library.find(filter).populate("books");
+    const libraries = await Library.find(filter).populate("books.book");
     res.json(libraries);
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Récupérer une bibliothèque par ID
+export const getLibraryById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const library = await Library.findById(id).populate("books.book");
+    if (!library) return res.status(404).json({ message: "Library not found" });
+
+    res.json(library);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
