@@ -56,18 +56,32 @@ export const deleteBooks = async (req, res) => {
   }
 };
 
+// export const searchBooks = async (req, res) => {
+//   const { query } = req.query;
+
+//   try {
+//     const books = await Book.find({
+//       $or: [
+//         { title: { $regex: query, $options: "i" } },
+//         { author: { $regex: query, $options: "i" } },
+//         { resume: { $regex: query, $options: "i" } },
+//         { genre: { $regex: query, $options: "i" } },
+//       ],
+//     });
+//     res.json(books);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const searchBooks = async (req, res) => {
   const { query } = req.query;
 
   try {
-    const books = await Book.find({
-      $or: [
-        { title: { $regex: query, $options: "i" } },
-        { author: { $regex: query, $options: "i" } },
-        { resume: { $regex: query, $options: "i" } },
-        { genre: { $regex: query, $options: "i" } },
-      ],
-    });
+    const books = await Book.find(
+      { $text: { $search: query } },
+      { score: { $meta: "textScore" } }
+    ).sort({ score: { $meta: "textScore" } });
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
