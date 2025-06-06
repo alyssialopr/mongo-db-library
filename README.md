@@ -3,6 +3,11 @@
 
 Une application de gestion de bibliothèque utilisant Node.js, Express et MongoDB.
 
+## Ajout avant 17h
+
+- Filtre avancé ( abovePrice250)
+- Fonction Update de books, libraries et customers
+
 ## Fonctionnalités
 
 - Gestion des livres, clients et bibliothèques
