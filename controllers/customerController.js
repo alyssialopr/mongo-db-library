@@ -22,6 +22,35 @@ export const createCustomer = async (req, res) => {
   }
 };
 
+export const updateCustomer = async (req, res) => {
+  const { id } = req.params;
+  const { mail, firstname, lastname, birthdate, country, language, loanBook } =
+    req.body;
+
+  try {
+    const updatedCustomer = await Customer.findByIdAndUpdate(
+      id,
+      {
+        mail,
+        firstname,
+        lastname,
+        birthdate,
+        country,
+        language,
+        loanBook,
+      },
+      { new: true }
+    );
+
+    if (!updatedCustomer)
+      return res.status(404).json({ message: "Customer not found" });
+
+    res.json(updatedCustomer);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 export const getCustomers = async (req, res) => {
 
   try {

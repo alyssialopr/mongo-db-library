@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createBook,
+  updateBook,
   getBooks,
   deleteBooks,
   searchBooks,
@@ -10,6 +11,8 @@ import {
 const router = express.Router();
 
 router.post("/", createBook);
+
+router.put("/:id", updateBook);
 
 router.get("/search", searchBooks);
 
