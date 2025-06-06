@@ -11,22 +11,24 @@ export const createBook = async (req, res) => {
 };
 
 export const getBooks = async (req, res) => {
-  try {    const { filter, date, author, price, isbn, genre, edition, resume } = req.query;
-    let query = {};
+  try {
+    // Mapping entre le paramètre de requête et la logique d'ajout au query
+    const fields = {
+      name: (val) => ({ name: { $regex: val, $options: "i" } }),
+      date: (val) => ({ date: val }),
+      author: (val) => ({ author: { $regex: val, $options: "i" } }),
+      price: (val) => ({ price: val }),
+      isbn: (val) => ({ isbn: val }),
+      genre: (val) => ({ genre: { $regex: val, $options: "i" } }),
+      edition: (val) => ({ edition: { $regex: val, $options: "i" } }),
+      resume: (val) => ({ resume: { $regex: val, $options: "i" } }),
+    };
 
-    // Title filter (case-insensitive)
-    if (filter) {
-      query.name = { $regex: filter, $options: "i" };
-    }
-
-    // Additional filters
-    if (date) query.date = date;
-    if (author) query.author = { $regex: author, $options: "i" };
-    if (price) query.price = price;
-    if (isbn) query.isbn = isbn;
-    if (genre) query.genre = { $regex: genre, $options: "i" };
-    if (edition) query.edition = { $regex: edition, $options: "i" };
-    if (resume) query.resume = { $regex: resume, $options: "i" };
+    const query = Object.entries(fields).reduce((acc, [key, fn]) => {
+      const value = req.query[key];
+      if (value) Object.assign(acc, fn(value));
+      return acc;
+    }, {});
 
     const books = await Book.find(query);
     res.json({ data: books });
@@ -34,6 +36,16 @@ export const getBooks = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getBookById = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) return res.status(404).json({ message: "Book not found" });
+    res.json(book);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 
 export const deleteBooks = async (req, res) => {
   try {
@@ -60,3 +72,27 @@ export const searchBooks = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const statisticsBooks = async (req, res) => {
+  try {
+    const stats = await Book.aggregate([
+      {
+        $group: {
+          _id: "$genre",
+          totalBooks: { $sum: 1 },
+          averagePrice: { $avg: "$price" },
+        },
+      },
+      {
+        $project: {
+          genre: "$_id",
+          totalBooks: 1,
+          averagePrice: 1,
+        },
+      },
+    ]);
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
