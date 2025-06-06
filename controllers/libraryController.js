@@ -64,34 +64,59 @@ export const deleteLibrary = async (req, res) => {
 export const statisticsLibraries = async (req, res) => {
   try {
     const stats = await Library.aggregate([
-      {
-        $unwind: "$books",
-      },
-      {
-        $group: {
-          _id: "$books.book",
-          totalBooks: { $sum: 1 },
-          totalStock: { $sum: "$books.stock" },
-        },
-      },
+      { $unwind: "$books" },
+
       {
         $lookup: {
           from: "books",
-          localField: "_id",
+          localField: "books.book",
           foreignField: "_id",
           as: "bookDetails",
         },
       },
+      { $unwind: "$bookDetails" },
+
       {
-        $unwind: "$bookDetails",
+        $group: {
+          _id: {
+            libraryId: "$_id",
+            libraryName: "$name",
+            bookId: "$books.book",
+            bookTitle: "$bookDetails.name",
+          },
+          stock: { $sum: "$books.stock" },
+          price: { $first: "$bookDetails.price" },
+        },
       },
+
+      {
+        $group: {
+          _id: {
+            libraryId: "$_id.libraryId",
+            libraryName: "$_id.libraryName",
+          },
+          books: {
+            $push: {
+              bookId: "$_id.bookId",
+              title: "$_id.bookTitle",
+              stock: "$stock",
+              price: "$price",
+            },
+          },
+          bookTitles: { $addToSet: "$_id.bookTitle" },
+          avgPrice: { $avg: "$price" },
+        },
+      },
+
       {
         $project: {
           _id: 0,
-          bookId: "$_id",
-          title: "$bookDetails.title",
-          totalBooks: 1,
-          totalStock: 1,
+          libraryId: "$_id.libraryId",
+          libraryName: "$_id.libraryName",
+          booksCount: { $size: "$bookTitles" },
+          bookTitles: 1,
+          avgPrice: { $round: ["$avgPrice", 2] },
+          books: 1,
         },
       },
     ]);
@@ -100,4 +125,4 @@ export const statisticsLibraries = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
