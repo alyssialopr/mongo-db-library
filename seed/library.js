@@ -9,20 +9,18 @@ const libraries = async () => {
 
   return [
     {
-      books: [book1?._id, book2?._id], // Ajout de l'ID du livre "Red"
+      books: [
+        { book: book1?._id, stock: 10 },
+        { book: book2?._id, stock: 5 },
+      ],
       name: "Library of Kanto",
     },
     {
-      books: [book3?._id], // Ajout de l'ID du livre "Blue"
+      books: [
+        { book: book1?._id, stock: 1850 },
+        { book: book3?._id, stock: 885 },
+      ],
       name: "Library of Johto",
-    },
-    {
-      books: [book2?._id], // Ajout de l'ID du livre "Misty"
-      name: "Library of Hoenn",
-    },
-    {
-      books: [book1?._id], // Ajout de l'ID du livre "Brock"
-      name: "Library of Sinnoh",
     },
   ];
 };

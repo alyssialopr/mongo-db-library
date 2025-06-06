@@ -1,5 +1,10 @@
 import express from "express";
-import { createLibrary, getLibraries, deleteLibrary } from "../controllers/libraryController.js";
+import {
+  createLibrary,
+  getLibraries,
+  deleteLibrary,
+  getLibraryById,
+} from "../controllers/libraryController.js";
 
 const router = express.Router();
 
@@ -8,6 +13,7 @@ router.post("/", createLibrary);
 
 // Route pour récupérer toutes les bibliothèques
 router.get("/", getLibraries);
+router.get("/:id", getLibraryById);
 
 // Route pour supprimer une bibliothèque par ID
 router.delete("/:id", deleteLibrary);
