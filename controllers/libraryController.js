@@ -60,3 +60,44 @@ export const deleteLibrary = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const statisticsLibraries = async (req, res) => {
+  try {
+    const stats = await Library.aggregate([
+      {
+        $unwind: "$books",
+      },
+      {
+        $group: {
+          _id: "$books.book",
+          totalBooks: { $sum: 1 },
+          totalStock: { $sum: "$books.stock" },
+        },
+      },
+      {
+        $lookup: {
+          from: "books",
+          localField: "_id",
+          foreignField: "_id",
+          as: "bookDetails",
+        },
+      },
+      {
+        $unwind: "$bookDetails",
+      },
+      {
+        $project: {
+          _id: 0,
+          bookId: "$_id",
+          title: "$bookDetails.title",
+          totalBooks: 1,
+          totalStock: 1,
+        },
+      },
+    ]);
+
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

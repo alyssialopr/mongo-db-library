@@ -4,6 +4,7 @@ import {
   getLibraries,
   deleteLibrary,
   getLibraryById,
+  statisticsLibraries,
 } from "../controllers/libraryController.js";
 
 const router = express.Router();
@@ -17,5 +18,8 @@ router.get("/:id", getLibraryById);
 
 // Route pour supprimer une bibliothèque par ID
 router.delete("/:id", deleteLibrary);
+
+// Route pour récupérer les statistiques des bibliothèques
+router.get("/statistics", statisticsLibraries);
 
 export default router;
