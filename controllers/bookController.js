@@ -12,7 +12,6 @@ export const createBook = async (req, res) => {
 
 export const getBooks = async (req, res) => {
   try {
-    // Mapping entre le paramètre de requête et la logique d'ajout au query
     const fields = {
       name: (val) => ({ name: { $regex: val, $options: "i" } }),
       date: (val) => ({ date: val }),

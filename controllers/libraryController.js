@@ -1,6 +1,5 @@
 import Library from "../models/Library.js";
 
-// Créer une nouvelle bibliothèque
 export const createLibrary = async (req, res) => {
   const { books, name, stock } = req.body;
 
@@ -18,11 +17,9 @@ export const createLibrary = async (req, res) => {
   }
 };
 
-// Récupérer toutes les bibliothèques
 export const getLibraries = async (req, res) => {
   const { search } = req.query;
   try {
-    // Filtre basé sur la recherche textuelle
     const filter = search ? { $text: { $search: search } } : {};
 
     const libraries = await Library.find(filter).populate("books.book");
@@ -33,7 +30,6 @@ export const getLibraries = async (req, res) => {
   }
 };
 
-// Récupérer une bibliothèque par ID
 export const getLibraryById = async (req, res) => {
   const { id } = req.params;
 
@@ -47,7 +43,6 @@ export const getLibraryById = async (req, res) => {
   }
 };
 
-// Supprimer une bibliothèque par ID
 export const deleteLibrary = async (req, res) => {
   const { id } = req.params;
 

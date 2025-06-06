@@ -5,13 +5,13 @@ const LibrarySchema = new mongoose.Schema({
     {
       book: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Book", // Référence au modèle "Book"
+        ref: "Book", 
         required: true,
       },
       stock: {
         type: Number,
-        default: 0, // Valeur par défaut pour le stock
-        min: 0, // Le stock ne peut pas être négatif
+        default: 0,
+        min: 0, 
       },
     },
   ],

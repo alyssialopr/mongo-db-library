@@ -1,6 +1,5 @@
 import Customer from "../models/Customer.js";
 
-// Créer un nouveau client
 export const createCustomer = async (req, res) => {
   const { mail, firstname, lastname, birthdate, country, language, loanBook } =
     req.body;
@@ -23,15 +22,9 @@ export const createCustomer = async (req, res) => {
   }
 };
 
-// Récupérer tous les clients
 export const getCustomers = async (req, res) => {
-  //const { search } = req.query;
 
   try {
-    // Filtre basé sur la recherche textuelle
-    //const filter = search ? { $text: { $search: search } } : {};
-
-    //const customers = await Customer.find(filter).populate("loanBook");
     const customers = await Customer.find();
     res.json({ data: customers });
   } catch (error) {
@@ -39,7 +32,6 @@ export const getCustomers = async (req, res) => {
   }
 };
 
-// Supprimer un client par ID
 export const deleteCustomer = async (req, res) => {
   const { id } = req.params;
 
