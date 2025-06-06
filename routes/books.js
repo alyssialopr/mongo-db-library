@@ -1,5 +1,9 @@
 import express from "express";
-import { createBook, getBooks, deleteTrainer } from "../controllers/bookController.js";
+import {
+  createBook,
+  getBooks,
+  deleteBooks,
+} from "../controllers/bookController.js";
 
 const router = express.Router();
 
@@ -10,6 +14,6 @@ router.post("/", createBook);
 router.get("/", getBooks);
 
 // Route pour supprimer un livre par ID
-router.delete("/:id", deleteTrainer);
+router.delete("/:id", deleteBooks);
 
 export default router;

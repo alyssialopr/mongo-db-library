@@ -22,7 +22,7 @@ export const getBooks = async (req, res) => {
 };
 
 
-export const deleteTrainer = async (req, res) => {
+export const deleteBooks = async (req, res) => {
   try {
     const deleted = await Trainer.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ message: "Trainer not found" });
