@@ -12,13 +12,29 @@ export const createBook = async (req, res) => {
 };
 
 export const getBooks = async (req, res) => {
- try {
-   const books = await Book.find()
+  try {
+    const { filter, date, author, price, isbn, genre, edition, resume } = req.query;
+    let query = {};
 
-   res.json({ data: books });
- } catch (error) {
-   res.status(500).json({ message: error.message });
- }
+    // Title filter (case-insensitive)
+    if (filter) {
+      query.name = { $regex: filter, $options: "i" };
+    }
+
+    // Additional filters
+    if (date) query.date = date;
+    if (author) query.author = { $regex: author, $options: "i" };
+    if (price) query.price = price;
+    if (isbn) query.isbn = isbn;
+    if (genre) query.genre = { $regex: genre, $options: "i" };
+    if (edition) query.edition = { $regex: edition, $options: "i" };
+    if (resume) query.resume = { $regex: resume, $options: "i" };
+
+    const books = await Book.find(query);
+    res.json({ data: books });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 
