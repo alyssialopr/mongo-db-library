@@ -55,6 +55,7 @@ const BookSchema = new mongoose.Schema(
         maxlength: 1000
     }
 })
+
 BookSchema.methods.isExpensive = function () {
   return this.price > 100;
 };
@@ -69,11 +70,6 @@ BookSchema.index(
 
 BookSchema.index(
     { price: 1 }
-);
-
-BookSchema.index(
-    { isbn: 1 },
-    { unique: true }
 );
 
 BookSchema.index(
