@@ -67,14 +67,10 @@ export const searchBooks = async (req, res) => {
   const { query } = req.query;
 
   try {
-    const books = await Book.find({
-      $or: [
-        { title: { $regex: query, $options: "i" } },
-        { author: { $regex: query, $options: "i" } },
-        { resume: { $regex: query, $options: "i" } },
-        { genre: { $regex: query, $options: "i" } },
-      ],
-    });
+    const books = await Book.find({ $text: { $search: query } })
+      .sort({ score: { $meta: "textScore" } })
+      .select({ score: { $meta: "textScore" } });
+
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
