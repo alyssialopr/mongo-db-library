@@ -45,26 +45,18 @@ export const deleteBooks = async (req, res) => {
   }
 };
 
-// export const searchBooks = async (req, res) => {
-//   try {
-//     const { title, author } = req.query;
-//     const query = {};
+export const searchBooks = async (req, res) => {
+  const { query } = req.query; 
 
-//     if (title) {
-//       query.title = new RegExp(title, "i");
-//     }
-
-//     if (author) {
-//       query.author = new RegExp(author, "i");
-//     }
-
-//     const books = await Book.find(query);
-//     if (books.length === 0) {
-//       return res.status(404).json({ message: "No books found" });
-//     }
-
-//     res.json({ data: books });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
+  try {
+    const books = await Book.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { author: { $regex: query, $options: "i" } }
+      ]
+    });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
