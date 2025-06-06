@@ -60,6 +60,10 @@ BookSchema.methods.isExpensive = function () {
   return this.price > 100;
 };
 
+BookSchema.statics.findBooksAbovePrice = function (priceThreshold) {
+  return this.find({ price: { $gt: priceThreshold } });
+};
+
 BookSchema.index(
     { name: 1, author: 1 }
 );
