@@ -40,6 +40,26 @@ export const getCustomers = async (req, res) => {
   }
 };
 
+export const loanBookToCustomer = async (req, res) => {
+  const { id } = req.params;
+  const { bookId } = req.body;
+
+  try {
+    const customer = await Customer.findById(id);
+    if (!customer) return res.status(404).json({ message: "Customer not found" });
+    if (customer.plus10LoanBooks())
+      return res.status(400).json({ message: "Customer has already 10 loaned books" });
+    if (customer.loanBook.includes(bookId))
+      return res.status(400).json({ message: "Book already loaned to this customer" });
+    customer.loanBook.push(bookId);
+    await customer.save();
+    res.json({ message: "Book successfully loaned to customer", customer });
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 export const deleteCustomer = async (req, res) => {
   const { id } = req.params;
 
